@@ -1,0 +1,6 @@
+.git
+.github
+.vscode
+Dockerfile
+.dockerignore
+docker-compose.yml

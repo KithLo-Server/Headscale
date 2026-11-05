@@ -1,0 +1,76 @@
+server_url: 127.0.0.1:8080
+listen_addr: 0.0.0.0:8080
+metrics_listen_addr: ""
+trusted_proxies:
+  - 127.0.0.1/32
+  - ::1/128
+noise:
+  private_key_path: /var/lib/headscale/noise_private.key
+prefixes:
+  v4: 100.64.0.0/10
+  v6: fd7a:115c:a1e0::/48
+  allocation: sequential
+derp:
+  server:
+    enabled: false
+  urls:
+    - https://controlplane.tailscale.com/derpmap/default
+  paths: []
+disable_check_updates: true
+node:
+  expiry: 0
+  ephemeral:
+    inactivity_timeout: 30m
+  routes:
+    ha:
+      probe_interval: 10s
+      probe_timeout: 5s
+database:
+  type: sqlite
+  debug: false
+  gorm:
+    prepare_stmt: true
+    parameterized_queries: true
+    skip_err_record_not_found: true
+    slow_threshold: 1000
+  sqlite:
+    path: /var/lib/headscale/db.sqlite
+    write_ahead_log: true
+    wal_autocheckpoint: 1000
+tls:
+  cert_path: ""
+  key_path: ""
+  acme:
+    hostname: ""
+    challenge_type: HTTP-01
+    http_listen: ":http"
+    url: https://acme-v02.api.letsencrypt.org/directory
+    email: ""
+    cache_dir: /var/lib/headscale/cache
+log:
+  level: info
+  format: text
+policy:
+  mode: file
+  path: ""
+dns:
+  magic_dns: true
+  base_domain: example.com
+  override_local_dns: false
+  nameservers:
+    global: []
+    split: {}
+  search_domains: []
+  extra_records: []
+  certificates:
+    enabled: false
+  challenge:
+    propagation_timeout: 2m
+unix_socket: /var/run/headscale/headscale.sock
+unix_socket_permission: "0770"
+logtail:
+  enabled: false
+taildrop:
+  enabled: true
+auto_update:
+  enabled: false

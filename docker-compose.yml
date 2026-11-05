@@ -1,0 +1,26 @@
+name: headscale
+
+services:
+  headscale:
+    image: headscale
+    container_name: headscale
+    restart: unless-stopped
+    pull_policy: never
+    build:
+      context: .
+      args:
+        SERVER_URL: "https://${HEADSCALE_WEB_HOST}"
+    read_only: true
+    tmpfs:
+      - /var/run/headscale
+    volumes:
+      - "${HEADSCALE_DATA}:/var/lib/headscale"
+    command: serve
+    healthcheck:
+      test: ["CMD", "headscale", "health"]
+    labels:
+      caddyfile: |
+        ${HEADSCALE_WEB_HOST} {
+            header -Server
+            reverse_proxy headscale:8080
+        }
