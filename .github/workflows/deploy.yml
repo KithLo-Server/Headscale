@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, shared]
+    runs-on: self-hosted
     env:
       HEADSCALE_DATA: ${{ vars.HEADSCALE_DATA }}
       HEADSCALE_WEB_HOST: ${{ vars.HEADSCALE_WEB_HOST }}
